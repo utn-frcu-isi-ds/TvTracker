@@ -1,0 +1,39 @@
+{
+  "id": "9ca902af-9828-402c-b8d0-3472c6d1bd3b",
+  "template": "app",
+  "versions": {
+    "AbpFramework": "8.2.2",
+    "AbpStudio": "0.7.9"
+  },
+  "modules": {
+    "TvTracker": {
+      "path": "TvTracker.abpmdl"
+    }
+  },
+  "runProfiles": {
+    "Default": {
+      "path": "etc/abp-studio/run-profiles/Default.abprun.json"
+    }
+  },
+  "options": {
+    "httpRequests": {
+      "ignoredUrls": [
+        "^/metrics$"
+      ]
+    }
+  },
+  "creatingStudioConfiguration": {
+    "template": "app",
+    "createdAbpStudioVersion": "0.7.9",
+    "tiered": "false",
+    "uiFramework": "no-ui",
+    "databaseProvider": "ef",
+    "databaseManagementSystem": "sqlserver",
+    "separateTenantSchema": "false",
+    "theme": "leptonx-lite",
+    "themeStyle": "system",
+    "mobileFramework": "none",
+    "publicWebsite": "false",
+    "socialLogin": ""
+  }
+}

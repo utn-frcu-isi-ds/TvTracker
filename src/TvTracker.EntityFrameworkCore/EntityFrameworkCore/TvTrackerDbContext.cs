@@ -25,7 +25,7 @@ public class TvTrackerDbContext :
     ITenantManagementDbContext,
     IIdentityDbContext
 {
-    /* Add DbSet properties for your Aggregate Roots / Entities here. */
+    /* Add DbSet properties for your Aggregate Roots / Entities here.   */
 
 
     #region Entities from the modules

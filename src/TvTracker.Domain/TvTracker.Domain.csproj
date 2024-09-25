@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TvTracker.Application.Contracts\TvTracker.Application.Contracts.csproj" />
     <ProjectReference Include="..\TvTracker.Domain.Shared\TvTracker.Domain.Shared.csproj" />
   </ItemGroup>
 

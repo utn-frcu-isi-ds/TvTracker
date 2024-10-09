@@ -80,9 +80,10 @@ public class TvTrackerHttpApiHostModule : AbpModule
             PreConfigure<OpenIddictServerBuilder>(serverBuilder =>
             {
                 serverBuilder.AddProductionEncryptionAndSigningCertificate("openiddict.pfx", "4Hn4zRk5Rip8Srjj");
+                serverBuilder.AddDevelopmentSigningCertificate();
                 serverBuilder.SetIssuer(new Uri(configuration["AuthServer:Authority"]!));
             });
-        }
+        }     
     }
 
     public override void ConfigureServices(ServiceConfigurationContext context)
@@ -181,6 +182,30 @@ public class TvTrackerHttpApiHostModule : AbpModule
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "TvTracker API", Version = "v1" });
                 options.DocInclusionPredicate((docName, description) => true);
                 options.CustomSchemaIds(type => type.FullName);
+                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header,
+                    Description = "Please insert JWT with Bearer into field",
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
+                });
+
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        Array.Empty<string>()
+                    }
+                });
+
             });
     }
 

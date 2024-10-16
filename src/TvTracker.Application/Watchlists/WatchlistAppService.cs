@@ -8,9 +8,11 @@ using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 using System.Linq;
 using Volo.Abp.Users;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TvTracker.Watchlists
 {
+    [Authorize]
     public class WatchlistAppService : ApplicationService, IWatchlistAppService
     {
         private readonly IRepository<Watchlist,int> _watchlistRepository;

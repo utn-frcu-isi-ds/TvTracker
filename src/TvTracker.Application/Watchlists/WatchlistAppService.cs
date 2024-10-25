@@ -7,22 +7,29 @@ using TvTracker.Series;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 using System.Linq;
+using Volo.Abp.Users;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TvTracker.Watchlists
 {
+    [Authorize]
     public class WatchlistAppService : ApplicationService, IWatchlistAppService
     {
         private readonly IRepository<Watchlist,int> _watchlistRepository;
         private readonly IRepository<Serie, int> _serieRepository;
+        private readonly ICurrentUser _currentUser;
 
-        public WatchlistAppService(IRepository<Watchlist, int> watchlistRepository, IRepository<Serie, int> serieRepository)
+        public WatchlistAppService(IRepository<Watchlist, int> watchlistRepository, IRepository<Serie, int> serieRepository, ICurrentUser currentUser)
         {
             _serieRepository = serieRepository;
             _watchlistRepository = watchlistRepository;
+            _currentUser = currentUser;
         }
 
         public async Task AddSerieAsync(int serieId)
         {
+            Guid? userId = _currentUser.Id;
+
             var watchlist = ((List<Watchlist>)await _watchlistRepository.GetListAsync()).FirstOrDefault();
             
             if(watchlist == null)

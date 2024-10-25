@@ -16,6 +16,15 @@ using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
 using TvTracker.Series;
 using TvTracker.Watchlists;
+using System.Reflection.Emit;
+using Microsoft.Extensions.DependencyInjection;
+using Volo.Abp.Users;
+using Microsoft.EntityFrameworkCore.Metadata;
+using System.Linq.Expressions;
+using System;
+using Volo.Abp.Auditing;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using TvTracker.User;
 
 namespace TvTracker.EntityFrameworkCore;
 
@@ -31,6 +40,7 @@ public class TvTrackerDbContext :
     public DbSet<Serie> Series { get; set; }
     public DbSet<Watchlist> Watchlists { get; set; }
 
+    private readonly CurrentUserService _currentUserService;
 
     #region Entities from the modules
 
@@ -64,12 +74,15 @@ public class TvTrackerDbContext :
     public TvTrackerDbContext(DbContextOptions<TvTrackerDbContext> options)
         : base(options)
     {
-
+        _currentUserService = this.GetService<CurrentUserService>();
     }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
+        
+        //// Configuración del filtro global para CreatorId basado en el usuario actual
+        builder.Entity<Serie>().HasQueryFilter(serie => serie.CreatorId == _currentUserService.GetCurrentUserId());
 
         /* Include modules to your migration db context */
         builder.Entity<Serie>(b =>

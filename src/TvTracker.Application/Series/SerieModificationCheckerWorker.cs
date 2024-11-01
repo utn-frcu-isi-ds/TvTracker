@@ -23,18 +23,18 @@ namespace TvTracker.Series
             Timer.Period = 600000; //10 minutes
         }
 
-        protected override async Task DoWorkAsync(
+        protected async override Task DoWorkAsync(
             PeriodicBackgroundWorkerContext workerContext)
         {
             Logger.LogInformation("Starting: Setting status of inactive users...");
 
             //Resolve dependencies
-            //var userRepository = workerContext
-            //    .ServiceProvider
-            //    .GetRequiredService<IUserRepository>();
+            var userRepository = workerContext
+                .ServiceProvider
+                .GetRequiredService<IUserRepository>();
 
             //Do the work
-            //await userRepository.UpdateInactiveUserStatusesAsync();
+            await userRepository.UpdateInactiveUserStatusesAsync();
 
             Logger.LogInformation("Completed: Setting status of inactive users...");
         }

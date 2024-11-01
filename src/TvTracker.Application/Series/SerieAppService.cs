@@ -10,10 +10,11 @@ using Volo.Abp.Domain.Repositories;
 
 namespace TvTracker.Series
 {
-    [Authorize]
+    //[Authorize]
     public class SerieAppService : CrudAppService<Serie, SerieDto, int, PagedAndSortedResultRequestDto, CreateUpdateSerieDto, CreateUpdateSerieDto>, ISerieAppService
     {
         private readonly ISeriesApiService _seriesApiService;
+
         public SerieAppService(IRepository<Serie, int> repository, ISeriesApiService seriesapiService) : base(repository)
         {
             _seriesApiService = seriesapiService;
@@ -21,7 +22,7 @@ namespace TvTracker.Series
 
         public async Task<ICollection<SerieDto>> SearchAsync(string? title, string? gender)
         {
-            return await _seriesApiService.GetSeriesAsync(title, gender);            
+            return await _seriesApiService.GetSeriesAsync(title, gender);
         }
     }
 }

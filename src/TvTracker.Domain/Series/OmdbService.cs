@@ -34,11 +34,16 @@ namespace TvTracker.Series
                 var searchResponse = JsonConvert.DeserializeObject<SearchResponse>(jsonResponse);
 
                 // Retornar la lista de series si existen
-                var seriesOmdb =  searchResponse?.Search ?? new List<SerieOmdb>();
+                var seriesOmdb = searchResponse?.Search ?? new List<SerieOmdb>();
 
                 foreach (var serieOmdb in seriesOmdb)
                 {
-                    series.Add(new SerieDto { Title = serieOmdb.Title });
+                    series.Add(new SerieDto
+                    {
+                        Title = serieOmdb.Title,
+                        Year = serieOmdb.Year,
+                        Poster = serieOmdb.Poster
+                    });
                 }
 
                 return series;
@@ -54,6 +59,7 @@ namespace TvTracker.Series
             [JsonProperty("Search")]
             public List<SerieOmdb> Search { get; set; }
         }
+
         private class SerieOmdb
         {
             public string Title { get; set; }
@@ -61,6 +67,7 @@ namespace TvTracker.Series
             public string Director { get; set; }
             public string Actors { get; set; }
             public string Plot { get; set; }
+            public string Poster { get; set; }
         }
     }
 }
